@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TugasKu</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #ffffff;
+    }
+
+    /* ===== SIDEBAR ===== */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 150px;
+      height: 100vh;
+      background: #0066cc;
+      color: #fff;
+      text-align: center;
+    }
+
+    .sidebar .logo {
+      font-size: 20px;
+      padding: 20px 10px 40px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+    }
+
+    .sidebar ul li a {
+      display: block;
+      padding: 10px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 15px;
+    }
+
+    .sidebar ul li a:hover,
+    .sidebar ul li a.active {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 150px;
+      right: 0;
+      height: 35px;
+      background: #dbeef8;
+      border-bottom: 1px solid #1e9be0;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .navbar .user {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: #333;
+    }
+
+    .navbar .avatar {
+      width: 12px;
+      height: 12px;
+      background: #555;
+      border-radius: 50%;
+    }
+
+    /* ===== KONTEN UTAMA ===== */
+    .content {
+      margin-left: 150px;
+      padding: 55px 30px 30px;
+    }
+
+    .content h1 {
+      font-size: 28px;
+      font-weight: normal;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="logo">TugasKu</div>
+    <ul>
+      <li><a href="#" class="active">Beranda</a></li>
+      <li><a href="#">Matkul</a></li>
+      <li><a href="#">Tugas</a></li>
+      <li><a href="#">Jadwal</a></li>
+      <li><a href="#">Rekap</a></li>
+    </ul>
+  </aside>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="user">
+      <span class="avatar"></span>
+      <span>Mahasiswa</span>
+    </div>
+  </header>
+
+  <!-- Konten -->
+  <main class="content">
+    <h1>Halo, Mahasiswa</h1>
+  </main>
+
+</body>
+</html>
