@@ -94,37 +94,10 @@
   <main class="konten">
     <div class="d-flex justify-content-between align-items-start mb-3">
     <h2 class="fw-normal ">Mata Kuliah</h2>
-    <button type="button" class="btn-solid theme-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  +Tambah Matkul
-</button>
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Tambah Matkul</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div>
-            <label for="nama" class="form-label">Nama Mata Kuliah</label>
-            <input type="text"  id="nama" class="form-control"> 
-          </div>
-          <div>
-            <label for="dosen" class="form-label">Nama Dosen</label>
-            <input type="text"  id="Dosen" class="form-control"> 
-          </div>
-
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
+    <a href="tambah matkul.html" class=" text-decoration-none text-light btn btn-primary">
+  +Tambah Matkul</a>
+    
   </div>
-</div>
-</div>
   <form class="d-flex mt-3 mb-4" role="search" style="max-width: 900px;">
     <input class="form-control me-2" type="search" placeholder="Cari nama Matkul..." aria-label="Search">
       <button class="btn btn-primary" type="submit">
@@ -138,6 +111,7 @@
     <thead>
       <tr>
         <th>No</th>
+        <th>Kode</th>
         <th>Matkul</th>
         <th>Dosen</th>
         <th>Aksi</th>
@@ -146,30 +120,39 @@
     <tbody>
       <tr>
         <td>1</td>
+        <td>IF104</td>
         <td>Daspro</td>
         <td>Ibu Nur Zahrati</td>
-        <td>
-          <button class="btn btn-secondary btn-sm px-3 me-3">Edit</button>
-          <button class="btn btn-danger btn-sm px-3">Hapus</button>
-        </td>
+        <td class="align-middle">
+  <div class="d-flex justify-content-center gap-2">
+    <a href="edit matkul.html" class="btn btn-secondary">Edit</a>
+    <a href="hapus-matkul.html" class="btn btn-danger">Hapus</a>
+  </div>
+</td>
       </tr>
       <tr>
         <td>2</td>
+        <td>IF104</td>
         <td>Dasproweb</td>
         <td>Ibu Cyntia</td>
-        <td>
-          <button class="btn btn-secondary btn-sm px-3 me-3">Edit</button>
-          <button class="btn btn-danger btn-sm px-3">Hapus</button>
-        </td>
+         <td class="align-middle">
+  <div class="d-flex justify-content-center gap-2">
+    <a href="edit matkul.html" class="btn btn-secondary">Edit</a>
+    <a href="hapus-matkul.html" class="btn btn-danger">Hapus</a>
+  </div>
+</td>
       </tr>
       <tr>
         <td>3</td>
+        <td>IF104</td>
         <td>Matematika</td>
         <td>Ibu Siska</td>
-        <td>
-          <button class="btn btn-secondary btn-sm px-3 me-3">Edit</button>
-          <button class="btn btn-danger btn-sm px-3">Hapus</button>
-        </td>
+         <td class="align-middle">
+  <div class="d-flex justify-content-center gap-2">
+    <a href="edit matkul.html" class="btn btn-secondary">Edit</a>
+    <a href="hapus-matkul.html" class="btn btn-danger">Hapus</a>
+  </div>
+</td>
       </tr>
     </tbody>
   </table>
