@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TugasKu</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+  <style>
+    * {
+      --sidebar-width: 150px;
+      --warna-utama: #0066CC;
+    }
+    
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: var(--sidebar-width);
+      height: 100vh;
+      background: var(--warna-utama);
+    }
+
+    .sidebar .nav-link {
+      color: #fff;
+      text-align: center;
+      border-radius: 0;
+    }
+
+    .sidebar .nav-link:hover,
+    .sidebar .nav-link.active {
+      background: rgba(255, 255, 255, 0.25);
+      color: #fff;
+    }
+    .navbar-atas {
+      margin-left: var(--sidebar-width);
+      background: #dbeef8;
+      border-bottom: 1px solid var(--warna-utama);
+    }
+
+
+    .konten {
+      margin-left: var(--sidebar-width);
+      padding: 20px 30px;
+
+    }
+  </style>
+</head>
+<body>
+
+ 
+  <aside class="sidebar d-flex flex-column text-center">
+    <h4 class="text-white py-4 mb-4">TugasKu</h4>
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a class="nav-link" href="Dasboardd.html">Beranda</a>
+      </li>
+    <li class="nav-item">
+        <a class="nav-link" href="Matkul.html">Mata Kuliah</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="Tugas.html">Tugas</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="Jadwal tugas.html">Jadwal</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="Rekap.html">Rekap</a>
+      </li>
+    </ul>
+  </aside>
+
+  
+  <nav class="navbar navbar-atas py-1">
+    <div class="container-fluid justify-content-end">
+      <span class="navbar-text small text-dark">
+        <i class="bi bi-person-circle me-1"></i>Mahasiswa
+      </span>
+    </div>
+  </nav>
+
+    <main class="konten">
+  <form id="formJadwal">
+    <div class="row g-4">
+      <h3 class="mb-2">Tambah Jadwal Mata Kuliah</h3>
+
+      <!-- Baris 1: tanggal dan jam -->
+      <div class="col-md-6">
+        <label for="tanggal" class="form-label fw-semibold fs-5">Tanggal</label>
+        <input type="date" class="form-control" id="tanggal" name="tanggal" required>
+      </div>
+
+      <div class="col-md-6">
+        <label for="mulai" class="form-label fw-semibold fs-5">Jam</label>
+        <div class="input-group">
+          <input type="time" class="form-control" id="mulai" name="mulai" aria-label="Jam mulai" required>
+          <span class="input-group-text">-</span>
+          <input type="time" class="form-control" id="selesai" name="selesai" aria-label="Jam selesai" required>
+        </div>
+      </div>
+
+      <!-- Baris 2: mata kuliah -->
+      <div class="col-12">
+        <label for="matkul" class="form-label fw-semibold fs-5">Mata Kuliah</label>
+        <select class="form-select" id="matkul" name="matkul" required>
+          <option value="" selected disabled>Pilih Mata Kuliah</option>
+          <option>Daspro</option>
+          <option>Dasproweb</option>
+          <option>Matematika</option>
+        </select>
+      </div>
+
+      <!-- Baris 3: topik -->
+      <div class="col-12">
+        <label for="topik" class="form-label fw-semibold fs-5">Topik</label>
+        <textarea class="form-control" id="topik" name="topik" rows="5"
+                  placeholder="Masukkan Topik"></textarea>
+      </div>
+
+      <!-- Tombol -->
+      <div class="col-12 d-flex justify-content-end gap-4 mt-4">
+        <a href="Jadwal tugas.html" class="btn btn-secondary px-4">Batal</a>
+        <button type="submit" class="btn btn-primary px-4">Simpan</button>
+      </div>
+    </div>
+  </form>
+</main>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+
+    const KEY = 'jadwalBelajar';
+    const NAMA_HARI = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+    const CONTOH = [
+      {id: 1, hari: 'Senin',  mulai: '08:00', selesai: '10:00', matkul: 'Daspro',    topik: 'Python'},
+      {id: 2, hari: 'Selasa', mulai: '11:00', selesai: '12:00', matkul: 'Dasproweb', topik: ''}
+    ];
+    function muat() {
+      try {
+        const data = JSON.parse(localStorage.getItem(KEY));
+        if (Array.isArray(data)) return data;
+      } catch (e) {}
+      return CONTOH.slice();
+    }
+    function simpan(data) {
+      try { localStorage.setItem(KEY, JSON.stringify(data)); } catch (e) {}
+    }
+    function fmt(d) {
+      return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+    }
+    function hariDari(tanggal) {
+      return NAMA_HARI[new Date(tanggal + 'T00:00:00').getDay()];
+    }
+    // untuk data lama yang hanya punya nama hari: cari tanggal terdekat pada hari itu
+    function tanggalBerikut(hari) {
+      const d = new Date();
+      d.setDate(d.getDate() + (NAMA_HARI.indexOf(hari) - d.getDay() + 7) % 7);
+      return fmt(d);
+    }
+    function tanggalJadwal(j) { return j.tanggal || tanggalBerikut(j.hari); }
+
+    const form = document.getElementById('formJadwal');
+    const id = Number(new URLSearchParams(location.search).get('id')) || null;
+    
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      if (form.selesai.value <= form.mulai.value) {
+        alert('Jam selesai harus lebih besar dari jam mulai.');
+        return;
+      }
+      const data = muat();
+      const baru = {
+        id: id,
+        tanggal: form.tanggal.value,
+        hari: hariDari(form.tanggal.value),
+        mulai: form.mulai.value,
+        selesai: form.selesai.value,
+        matkul: form.matkul.value,
+        topik: form.topik.value.trim()
+      };
+      const idx = id ? data.findIndex(j => j.id === id) : -1;
+      if (idx >= 0) {
+        data[idx] = baru;
+      } else {
+        baru.id = data.reduce((m, j) => Math.max(m, j.id), 0) + 1;
+        data.push(baru);
+      }
+      simpan(data);
+      window.location.href = 'Jadwal tugas.html';
+    });
+  </script>
+</body>
+</html>
