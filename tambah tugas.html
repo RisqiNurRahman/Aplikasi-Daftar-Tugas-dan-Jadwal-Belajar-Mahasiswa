@@ -110,12 +110,16 @@
         </div>
 
         <!-- Baris 3: deadline, prioritas, status -->
-        <div class="col-md-4">
+         <div class="col-md-3">
+          <label for="tanggalTambah" class="form-label fw-semibold">Tanggal Ditambahkan</label>
+          <input type="date" class="form-control" id="tanggalTambah" name="tanggal_tambah" required>
+        </div>
+        <div class="col-md-3">
           <label for="deadline" class="form-label fw-semibold">Deadline</label>
           <input type="date" class="form-control" id="deadline" name="deadline" required>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
           <label for="prioritas" class="form-label fw-semibold">Prioritas</label>
           <select class="form-select" id="prioritas" name="prioritas" required>
             <option value="" selected disabled>Pilih prioritas</option>
@@ -125,7 +129,7 @@
           </select>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
           <label for="status" class="form-label fw-semibold">Status</label>
           <select class="form-select" id="status" name="status" required>
             <option value="" selected disabled>Pilih status</option>
