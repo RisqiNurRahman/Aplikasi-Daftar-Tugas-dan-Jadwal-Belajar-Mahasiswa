@@ -3,19 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TugasKu</title>
+  <title>TugasKu - Mata Kuliah</title>
 
   <!-- Bootstrap CSS & Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 
   <style>
-    * {
+    :root {
       --sidebar-width: 150px;
       --warna-utama: #0066CC;
     }
 
-    /* Sidebar */
     .sidebar {
       position: fixed;
       top: 0;
@@ -24,11 +23,9 @@
       height: 100vh;
       background: var(--warna-utama);
     }
-    
+
     .sidebar .nav-link {
-      display: block;
       color: #fff;
-      justify-content: center;
       border-radius: 0;
       padding: 0.5rem 1rem;
     }
@@ -39,35 +36,35 @@
       color: #fff;
     }
 
-    /* Navbar */
     .navbar-atas {
       margin-left: var(--sidebar-width);
       background: #dbeef8;
       border-bottom: 1px solid var(--warna-utama);
     }
-    .navbar-bawah {
-    background: white;
-    padding: 20px 30px;
-    margin-bottom: 10px;
-    }
-    /* Konten */
+
+
     .konten {
       margin-left: var(--sidebar-width);
       padding: 20px 30px;
+    }
+
+   
+    .modal-hapus {
+      border: 2px solid #000;
+      border-radius: 30px;
     }
   </style>
 </head>
 <body>
 
-  <!-- SIDEBAR -->
   <aside class="sidebar d-flex flex-column text-center">
     <h4 class="text-white py-4 mb-4">TugasKu</h4>
     <ul class="nav flex-column">
       <li class="nav-item">
         <a class="nav-link" href="Dasboardd.html">Beranda</a>
       </li>
-    <li class="nav-item">
-        <a class="nav-link" href="Matkul.html">Mata Kuliah</a>
+      <li class="nav-item">
+        <a class="nav-link active" href="Matkul.html" aria-current="page">Mata Kuliah</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="Tugas.html">Tugas</a>
@@ -81,7 +78,6 @@
     </ul>
   </aside>
 
-  <!-- NAVBAR -->
   <nav class="navbar navbar-atas py-1">
     <div class="container-fluid justify-content-end">
       <span class="navbar-text small text-dark">
@@ -90,131 +86,91 @@
     </div>
   </nav>
 
-  <!-- KONTEN -->
   <main class="konten">
+
+  
     <div class="d-flex justify-content-between align-items-start mb-3">
-    <h2 class="fw-normal ">Mata Kuliah</h2>
-    <a href="tambah matkul.html" class=" text-decoration-none text-light btn btn-primary">
-  +Tambah Matkul</a>
-    
-  </div>
-  <form class="d-flex mt-3 mb-4" role="search" style="max-width: 900px;">
-    <input class="form-control me-2" type="search" placeholder="Cari nama Matkul..." aria-label="Search">
-      <button class="btn btn-primary" type="submit">
+      <h2 class="fw-normal">Mata Kuliah</h2>
+      <a href="tambah matkul.html" class="btn btn-primary">+ Tambah Matkul</a>
+    </div>
+
+
+    <form class="d-flex mt-3 mb-4" role="search" style="max-width: 900px;">
+      <input class="form-control me-2" type="search" placeholder="Cari nama Matkul..." aria-label="Cari matkul">
+      <button class="btn btn-primary" type="submit" aria-label="Cari">
         <i class="bi bi-search"></i>
       </button>
     </form>
-    
- 
+
     <div class="container-fluid my-4 px-5">
-  <table class="table table-bordered border-dark text-center align-middle">
-    <thead>
-      <tr>
-        <th>No</th>
-        <th>Kode</th>
-        <th>Matkul</th>
-        <th>Dosen</th>
-        <th>Aksi</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>1</td>
-        <td>IF104</td>
-        <td>Daspro</td>
-        <td>Ibu Nur Zahrati</td>
-        <td class="align-middle">
-  <div class="d-flex justify-content-center gap-2">
-    <a href="edit matkul.html" class="btn btn-secondary">Edit</a>
-    <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalhapus">Hapus</a>
-    
+      <table class="table table-bordered border-dark text-center align-middle">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Kode</th>
+            <th>Matkul</th>
+            <th>Dosen</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>IF104</td>
+            <td>Daspro</td>
+            <td>Ibu Nur Zahrati</td>
+            <td>
+              <div class="d-flex justify-content-center gap-2">
+                <a href="edit matkul.html" class="btn btn-secondary">Edit</a>
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalHapus">Hapus</button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>IF104</td>
+            <td>Dasproweb</td>
+            <td>Ibu Cyntia</td>
+            <td>
+              <div class="d-flex justify-content-center gap-2">
+                <a href="edit matkul.html" class="btn btn-secondary">Edit</a>
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalHapus">Hapus</button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>IF104</td>
+            <td>Matematika</td>
+            <td>Ibu Siska</td>
+            <td>
+              <div class="d-flex justify-content-center gap-2">
+                <a href="edit matkul.html" class="btn btn-secondary">Edit</a>
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalHapus">Hapus</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
 
-<div class="modal fade" id="modalhapus" tabindex="-1" aria-labelledby="judulHapus" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content" style="border: 2px solid #000; border-radius: 30px;">
-      <div class="modal-body text-center py-5 px-4">
+  <div class="modal fade" id="modalHapus" tabindex="-1" aria-labelledby="judulHapus" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content modal-hapus">
+        <div class="modal-body text-center py-5 px-4">
+          <h4 class="mb-4" id="judulHapus">Hapus Mata Kuliah</h4>
+          <p class="small mb-4">Apa kamu yakin ingin menghapus mata kuliah ini?</p>
 
-        <h4 class="mb-4" id="judulHapus">Hapus Mata Kuliah</h4>
-        <p class="small mb-4">Apa kamu yakin ingin menghapus mata kuliah ini?</p>
-
-        <div class="d-flex justify-content-center gap-5">
-          <button type="button" class="btn btn-light border border-dark btn-sm px-4" data-bs-dismiss="modal">Batal</button>
-          <a href="Matkul.html" class="btn btn-danger btn-sm px-4">Hapus</a>
+          <div class="d-flex justify-content-center gap-5">
+            <button type="button" class="btn btn-light border border-dark btn-sm px-4" data-bs-dismiss="modal">Batal</button>
+            <a href="Matkul.html" class="btn btn-danger btn-sm px-4">Hapus</a>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-  </div>
-</td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>IF104</td>
-        <td>Dasproweb</td>
-        <td>Ibu Cyntia</td>
-         <td class="align-middle">
-  <div class="d-flex justify-content-center gap-2">
-    <a href="edit matkul.html" class="btn btn-secondary">Edit</a>
-    <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalhapus">Hapus</a>
-    
 
-<div class="modal fade" id="modalhapus" tabindex="-1" aria-labelledby="judulHapus" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content" style="border: 2px solid #000; border-radius: 30px;">
-      <div class="modal-body text-center py-5 px-4">
-
-        <h4 class="mb-4" id="judulHapus">Hapus Mata Kuliah</h4>
-        <p class="small mb-4">Apa kamu yakin ingin menghapus mata kuliah ini?</p>
-
-        <div class="d-flex justify-content-center gap-5">
-          <button type="button" class="btn btn-light border border-dark btn-sm px-4" data-bs-dismiss="modal">Batal</button>
-          <a href="#" class="btn btn-danger btn-sm px-4">Hapus</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-  </div>
-</td>
-      </tr>
-      <tr>
-        <td>3</td>
-        <td>IF104</td>
-        <td>Matematika</td>
-        <td>Ibu Siska</td>
-         <td class="align-middle">
-  <div class="d-flex justify-content-center gap-2">
-    <a href="edit matkul.html" class="btn btn-secondary">Edit</a>
-    <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalhapus">Hapus</a>
-    
-
-<div class="modal fade" id="modalhapus" tabindex="-1" aria-labelledby="judulHapus" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content" style="border: 2px solid #000; border-radius: 30px;">
-      <div class="modal-body text-center py-5 px-4">
-
-        <h4 class="mb-4" id="judulHapus">Hapus Mata Kuliah</h4>
-        <p class="small mb-4">Apa kamu yakin ingin menghapus mata kuliah ini?</p>
-
-        <div class="d-flex justify-content-center gap-5">
-          <button type="button" class="btn btn-light border border-dark btn-sm px-4" data-bs-dismiss="modal">Batal</button>
-          <a href="#" class="btn btn-danger btn-sm px-4">Hapus</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-  </div>
-
-</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-</main>
- 
-  <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
