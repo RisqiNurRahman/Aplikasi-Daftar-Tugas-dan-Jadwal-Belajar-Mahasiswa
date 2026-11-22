@@ -1,3 +1,24 @@
+<?php
+// Baca data matkul dari matkul.json
+$file = "matkul.json";
+$data = [];
+if (file_exists($file)) {
+    $data = json_decode(file_get_contents($file), true);
+    if (!is_array($data)) {
+        $data = [];
+    }
+}
+
+// Pencarian nama matkul (form di bawah memakai method GET)
+$cari = trim($_GET["cari"] ?? "");
+if ($cari !== "") {
+    $data = array_filter($data, function ($m) use ($cari) {
+        return stripos($m["nama_matkul"], $cari) !== false;
+    });
+}
+
+$status = $_GET["status"] ?? "";
+?>
 <!DOCTYPE html>
 <html lang="id" data-bs-theme="light">
 <head>
@@ -5,7 +26,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TugasKu - Mata Kuliah</title>
 
-  <!-- Bootstrap CSS & Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 
@@ -42,13 +62,11 @@
       border-bottom: 1px solid var(--warna-utama);
     }
 
-
     .konten {
       margin-left: var(--sidebar-width);
       padding: 20px 30px;
     }
 
-   
     .modal-hapus {
       border: 2px solid #000;
       border-radius: 30px;
@@ -64,7 +82,7 @@
         <a class="nav-link" href="Dasboardd.html">Beranda</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link " href="Matkul.html" aria-current="page">Mata Kuliah</a>
+        <a class="nav-link active" href="Matkul.php" aria-current="page">Mata Kuliah</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="Tugas.html">Tugas</a>
@@ -88,15 +106,20 @@
 
   <main class="konten">
 
-  
     <div class="d-flex justify-content-between align-items-start mb-3">
       <h2 class="fw-normal">Mata Kuliah</h2>
-      <a href="tambah matkul.html" class="btn btn-primary">+ Tambah Matkul</a>
+      <a href="tambah_matkul.php" class="btn btn-primary">+ Tambah Matkul</a>
     </div>
 
+    <?php if ($status === "tambah_sukses"): ?>
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        Mata kuliah berhasil ditambahkan.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+      </div>
+    <?php endif; ?>
 
-    <form class="d-flex mt-3 mb-4" role="search" style="max-width: 900px;">
-      <input class="form-control me-2" type="search" placeholder="Cari nama Matkul..." aria-label="Cari matkul">
+    <form class="d-flex mt-3 mb-4" role="search" method="GET" action="Matkul.php" style="max-width: 900px;">
+      <input class="form-control me-2" type="search" name="cari" value="<?= htmlspecialchars($cari) ?>" placeholder="Cari nama Matkul..." aria-label="Cari matkul">
       <button class="btn btn-primary" type="submit" aria-label="Cari">
         <i class="bi bi-search"></i>
       </button>
@@ -114,42 +137,26 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>IF104</td>
-            <td>Daspro</td>
-            <td>Ibu Nur Zahrati</td>
-            <td>
-              <div class="d-flex justify-content-center gap-2">
-                <a href="edit matkul.html" class="btn btn-secondary">Edit</a>
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalHapus">Hapus</button>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>IF104</td>
-            <td>Dasproweb</td>
-            <td>Ibu Cyntia</td>
-            <td>
-              <div class="d-flex justify-content-center gap-2">
-                <a href="edit matkul.html" class="btn btn-secondary">Edit</a>
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalHapus">Hapus</button>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>IF104</td>
-            <td>Matematika</td>
-            <td>Ibu Siska</td>
-            <td>
-              <div class="d-flex justify-content-center gap-2">
-                <a href="edit matkul.html" class="btn btn-secondary">Edit</a>
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalHapus">Hapus</button>
-              </div>
-            </td>
-          </tr>
+          <?php if (count($data) === 0): ?>
+            <tr>
+              <td colspan="5">Belum ada data mata kuliah.</td>
+            </tr>
+          <?php else: ?>
+            <?php $no = 1; foreach ($data as $m): ?>
+              <tr>
+                <td><?= $no++ ?></td>
+                <td><?= htmlspecialchars($m["kode"]) ?></td>
+                <td><?= htmlspecialchars($m["nama_matkul"]) ?></td>
+                <td><?= htmlspecialchars($m["nama_dosen"]) ?></td>
+                <td>
+                  <div class="d-flex justify-content-center gap-2">
+                    <a href="edit Matkul.php" class="btn btn-secondary">Edit</a>
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalHapus">Hapus</button>
+                  </div>
+                </td>
+              </tr>
+            <?php endforeach; ?>
+          <?php endif; ?>
         </tbody>
       </table>
     </div>
@@ -164,7 +171,7 @@
 
           <div class="d-flex justify-content-center gap-5">
             <button type="button" class="btn btn-light border border-dark btn-sm px-4" data-bs-dismiss="modal">Batal</button>
-            <a href="Matkul.html" class="btn btn-danger btn-sm px-4">Hapus</a>
+            <a href="Matkul.php" class="btn btn-danger btn-sm px-4">Hapus</a>
           </div>
         </div>
       </div>

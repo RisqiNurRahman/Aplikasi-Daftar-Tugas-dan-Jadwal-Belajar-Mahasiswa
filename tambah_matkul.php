@@ -1,3 +1,4 @@
+<?php $status = $_GET["status"] ?? ""; ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -13,7 +14,7 @@
       --sidebar-width: 150px;
       --warna-utama: #0066CC;
     }
-    
+
     .sidebar {
       position: fixed;
       top: 0;
@@ -34,31 +35,29 @@
       background: rgba(255, 255, 255, 0.25);
       color: #fff;
     }
+
     .navbar-atas {
       margin-left: var(--sidebar-width);
       background: #dbeef8;
       border-bottom: 1px solid var(--warna-utama);
     }
 
-
     .konten {
       margin-left: var(--sidebar-width);
       padding: 20px 30px;
-
     }
   </style>
 </head>
 <body>
 
- 
   <aside class="sidebar d-flex flex-column text-center">
     <h4 class="text-white py-4 mb-4">TugasKu</h4>
     <ul class="nav flex-column">
       <li class="nav-item">
         <a class="nav-link" href="Dasboardd.html">Beranda</a>
       </li>
-    <li class="nav-item">
-        <a class="nav-link" href="Matkul.html">Mata Kuliah</a>
+      <li class="nav-item">
+        <a class="nav-link" href="Matkul.php">Mata Kuliah</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="Tugas.html">Tugas</a>
@@ -72,7 +71,6 @@
     </ul>
   </aside>
 
-  
   <nav class="navbar navbar-atas py-1">
     <div class="container-fluid justify-content-end">
       <span class="navbar-text small text-dark">
@@ -81,40 +79,43 @@
     </div>
   </nav>
 
-<main class="konten">
-<div class="main">
-<div class="container-fluid px-5 py-4">
+  <main class="konten">
+    <div class="container-fluid px-5 py-4">
       <h3 class="mb-4">Tambah Mata Kuliah</h3>
 
+      <?php if ($status === "kosong"): ?>
+        <div class="alert alert-warning">Semua kolom wajib diisi.</div>
+      <?php elseif ($status === "gagal"): ?>
+        <div class="alert alert-danger">Data gagal disimpan. Coba lagi.</div>
+      <?php endif; ?>
+
       <div class="form-card">
-        <form id="formEdit">
-            <div class="mb-4">
+        <!-- action: kirim ke proses_tambah_matkul.php, method: POST -->
+        <form id="formTambah" action="proses_tambah_matkul.php" method="POST">
+          <div class="mb-4">
             <label for="kode" class="form-label">Kode</label>
-            <input type="text" class="form-control" id="kode" value="" required>
+            <input type="text" class="form-control" id="kode" name="kode" required>
           </div>
+
           <div class="mb-3">
             <label for="namaMatkul" class="form-label">Nama Mata Kuliah</label>
-            <input type="text" class="form-control" id="namaMatkul" value="" required>
+            <input type="text" class="form-control" id="namaMatkul" name="nama_matkul" required>
           </div>
 
           <div class="mb-3">
             <label for="namaDosen" class="form-label">Nama Dosen</label>
-            <input type="text" class="form-control" id="namaDosen" value="" required>
+            <input type="text" class="form-control" id="namaDosen" name="nama_dosen" required>
           </div>
 
-          <div class="modal-footer d-flex gap-3">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><a href="Matkul.html" class=" text-decoration-none text-light">Batal</button>
-            <button type="button" class="btn btn-primary">Simpan</button>
-          </div>
-
+          <div class="d-flex gap-3">
+            <a href="Matkul.php" class="btn btn-secondary">Batal</a>
+            <button type="submit" class="btn btn-primary">Simpan</button>
           </div>
         </form>
       </div>
     </div>
-  </div>
-</div>
-</main>
- 
+  </main>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
