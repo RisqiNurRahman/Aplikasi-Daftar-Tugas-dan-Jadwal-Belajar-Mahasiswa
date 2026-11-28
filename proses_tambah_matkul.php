@@ -1,47 +1,45 @@
 <?php
-// proses_tambah_matkul.php
-// Menyimpan data matkul baru ke file matkul.json (tanpa database)
+include 'koneksi.php';
 
-if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    header("Location: tambah_matkul.php");
+// Halaman ini hanya boleh diakses lewat form (POST)
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header('Location: tambah_matkul.php');
     exit;
 }
 
-// 1. Ambil data dari form
-$kode        = trim($_POST["kode"] ?? "");
-$nama_matkul = trim($_POST["nama_matkul"] ?? "");
-$nama_dosen  = trim($_POST["nama_dosen"] ?? "");
+// Supaya query yang gagal mengembalikan false, sehingga blok else bisa jalan
+mysqli_report(MYSQLI_REPORT_OFF);
 
-// 2. Cek tidak boleh kosong
-if ($kode === "" || $nama_matkul === "" || $nama_dosen === "") {
-    header("Location: tambah_matkul.php?status=kosong");
+$kode   = trim($_POST['kode'] ?? '');
+$matkul = trim($_POST['nama_matkul'] ?? '');
+$dosen  = trim($_POST['nama_dosen'] ?? '');
+
+if ($kode === '' || $matkul === '' || $dosen === '') {
+    echo "<script>
+        alert('Semua data wajib diisi');
+        window.location.href = 'tambah_matkul.php';
+    </script>";
     exit;
 }
 
-// 3. Baca data lama dari matkul.json (kalau file belum ada, mulai dari array kosong)
-$file = "matkul.json";
-$data = [];
-if (file_exists($file)) {
-    $data = json_decode(file_get_contents($file), true);
-    if (!is_array($data)) {
-        $data = [];
-    }
+// Tanda ? diisi terpisah supaya aman dari SQL injection
+$stmt  = mysqli_prepare($koneksi, "INSERT INTO mata_kuliah (kode, matkul, dosen) VALUES (?, ?, ?)");
+$input = false;
+if ($stmt) {
+    mysqli_stmt_bind_param($stmt, 'sss', $kode, $matkul, $dosen);
+    $input = mysqli_stmt_execute($stmt);
 }
 
-// 4. Tambahkan data baru ke array
-$data[] = [
-    "kode"        => $kode,
-    "nama_matkul" => $nama_matkul,
-    "nama_dosen"  => $nama_dosen,
-];
-
-// 5. Simpan kembali ke file
-$hasil = file_put_contents($file, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE), LOCK_EX);
-
-// 6. Arahkan ke halaman daftar matkul
-if ($hasil === false) {
-    header("Location: tambah_matkul.php?status=gagal");
+if ($input) {
+    echo "<script>
+        alert('Data Berhasil Disimpan');
+        window.location.href = 'Matkul.php';
+    </script>";
 } else {
-    header("Location: Matkul.php?status=tambah_sukses");
+    die(mysqli_error($koneksi));
+    echo "<script>  
+        alert('Gagal Menyimpan Data');
+        window.location.href = 'tambah_matkul.php';
+    </script>";
 }
-exit;
+?>

@@ -1,23 +1,14 @@
 <?php
-// Baca data matkul dari matkul.json
-$file = "matkul.json";
-$data = [];
-if (file_exists($file)) {
-    $data = json_decode(file_get_contents($file), true);
-    if (!is_array($data)) {
-        $data = [];
-    }
-}
+include 'koneksi.php';
 
 // Pencarian nama matkul (form di bawah memakai method GET)
 $cari = trim($_GET["cari"] ?? "");
-if ($cari !== "") {
-    $data = array_filter($data, function ($m) use ($cari) {
-        return stripos($m["nama_matkul"], $cari) !== false;
-    });
-}
+$kata = "%" . addcslashes($cari, "%_\\") . "%";
 
-$status = $_GET["status"] ?? "";
+$stmt = mysqli_prepare($koneksi, "SELECT id, kode, matkul AS nama_matkul, dosen AS nama_dosen FROM mata_kuliah WHERE matkul LIKE ?");
+mysqli_stmt_bind_param($stmt, "s", $kata);
+mysqli_stmt_execute($stmt);
+$data = mysqli_fetch_all(mysqli_stmt_get_result($stmt), MYSQLI_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="id" data-bs-theme="light">
@@ -111,13 +102,6 @@ $status = $_GET["status"] ?? "";
       <a href="tambah_matkul.php" class="btn btn-primary">+ Tambah Matkul</a>
     </div>
 
-    <?php if ($status === "tambah_sukses"): ?>
-      <div class="alert alert-success alert-dismissible fade show" role="alert">
-        Mata kuliah berhasil ditambahkan.
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
-      </div>
-    <?php endif; ?>
-
     <form class="d-flex mt-3 mb-4" role="search" method="GET" action="Matkul.php" style="max-width: 900px;">
       <input class="form-control me-2" type="search" name="cari" value="<?= htmlspecialchars($cari) ?>" placeholder="Cari nama Matkul..." aria-label="Cari matkul">
       <button class="btn btn-primary" type="submit" aria-label="Cari">
@@ -150,8 +134,8 @@ $status = $_GET["status"] ?? "";
                 <td><?= htmlspecialchars($m["nama_dosen"]) ?></td>
                 <td>
                   <div class="d-flex justify-content-center gap-2">
-                    <a href="edit Matkul.php" class="btn btn-secondary">Edit</a>
-                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalHapus">Hapus</button>
+                    <a href="edit_matkul.php?id=<?= (int) $m["id"] ?>" class="btn btn-secondary">Edit</a>
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalHapus" data-id="<?= (int) $m["id"] ?>">Hapus</button>
                   </div>
                 </td>
               </tr>
@@ -171,7 +155,10 @@ $status = $_GET["status"] ?? "";
 
           <div class="d-flex justify-content-center gap-5">
             <button type="button" class="btn btn-light border border-dark btn-sm px-4" data-bs-dismiss="modal">Batal</button>
-            <a href="Matkul.php" class="btn btn-danger btn-sm px-4">Hapus</a>
+            <form action="hapus_matkul.php" method="POST">
+              <input type="hidden" name="id" id="hapus-id">
+              <button type="submit" class="btn btn-danger btn-sm px-4">Hapus</button>
+            </form>
           </div>
         </div>
       </div>
@@ -179,5 +166,11 @@ $status = $_GET["status"] ?? "";
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Saat modal dibuka, isi id sesuai tombol Hapus yang diklik
+    document.getElementById('modalHapus').addEventListener('show.bs.modal', function (event) {
+      document.getElementById('hapus-id').value = event.relatedTarget.getAttribute('data-id');
+    });
+  </script>
 </body>
 </html>
